@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Suite Hotel Nakuru | Modern Luxury in the Heart of Nakuru</title>
+    <meta name="description"
+        content="Experience modern luxury at Gold Suite Hotel Nakuru. A 3-star boutique property in Biashara, Nakuru, offering a balance of comfort and accessibility for business and leisure.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sand: '#F5E6D3',
+                        charcoal: '#1A1A1A',
+                        gold: '#D4AF37',
+                        offwhite: '#F9F9F9',
+                        stone: '#8E8E8E',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <style>
+        :root {
+            --color-sand: #F5E6D3;
+            --color-charcoal: #1A1A1A;
+            --color-gold: #D4AF37;
+            --color-offwhite: #F9F9F9;
+        }
+
+        body {
+            background-color: var(--color-offwhite);
+            color: var(--color-charcoal);
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-offwhite);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-charcoal);
+        }
+
+        .luxury-text-reveal {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--color-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-luxury {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid var(--color-gold);
+        }
+
+        .btn-luxury::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-gold);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-luxury:hover::before {
+            top: 0;
+        }
+
+        .btn-luxury:hover {
+            color: white;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .image-zoom-hover {
+            overflow: hidden;
+        }
+
+        .image-zoom-hover img {
+            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .image-zoom-hover:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Lightbox styles */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 250px;
+            gap: 1.5rem;
+        }
+
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+
+        .gallery-item.tall {
+            grid-row: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-item.wide {
+                grid-column: span 1;
+            }
+
+            .gallery-grid {
+                grid-auto-rows: 200px;
+            }
+        }
+
+        .animate-scroll-line {
+            animation: scrollLine 2s infinite;
+        }
+
+        @keyframes scrollLine {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[2000] bg-charcoal flex items-center justify-center">
+        <div class="text-center">
+            <h1 class="font-serif text-3xl text-sand tracking-widest opacity-0 translate-y-4 uppercase"
+                id="loader-logo">Gold Suite</h1>
+            <div class="w-24 h-[1px] bg-gold mt-4 mx-auto scale-x-0" id="loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 py-6 px-8 flex justify-between items-center transition-all duration-500"
+        id="main-nav">
+        <div class="flex items-center">
+            <a href="#" class="font-serif text-2xl tracking-tighter text-white drop-shadow-md">Gold Suite <span
+                    class="text-gold">Hotel</span></a>
+        </div>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex space-x-10 text-white text-xs uppercase tracking-[0.2em] font-medium">
+            <a href="#about" class="nav-link relative">Story</a>
+            <a href="#amenities" class="nav-link relative">Amenities</a>
+            <a href="#rooms" class="nav-link relative">Accommodation</a>
+            <a href="#gallery" class="nav-link relative">Gallery</a>
+            <a href="#location" class="nav-link relative">Location</a>
+        </div>
+
+        <div class="hidden md:block">
+            <a href="#book"
+                class="px-8 py-3 bg-white/10 hover:bg-gold hover:text-white backdrop-blur-md border border-white/20 text-white text-[10px] uppercase tracking-[0.2em] transition-all duration-500">Book
+                Now</a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="md:hidden text-white focus:outline-none" id="mobile-menu-btn">
+            <span class="block w-6 h-[1px] bg-white mb-2"></span>
+            <span class="block w-6 h-[1px] bg-white"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div id="side-menu"
+        class="fixed inset-0 z-[100] bg-charcoal translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] p-12 flex flex-col justify-between">
+        <div class="flex justify-end">
+            <button class="text-sand text-3xl" id="close-menu-btn">&times;</button>
+        </div>
+        <div class="flex flex-col space-y-8 text-3xl font-serif text-sand">
+            <a href="#about" class="mobile-link">The Story</a>
+            <a href="#amenities" class="mobile-link">Amenities</a>
+            <a href="#rooms" class="mobile-link">Accommodation</a>
+            <a href="#gallery" class="mobile-link">Gallery</a>
+            <a href="#location" class="mobile-link">Location</a>
+        </div>
+        <div class="text-sand/50 text-xs tracking-widest leading-loose">
+            <p>Kanu Street, Biashara, Nakuru</p>
+            <p>+254 785 438 434</p>
+        </div>
+    </div>
+
+    <!-- 1. Cinematic Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Hero Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/4e7153fd.jpg?impolicy=resizecrop&rw=1500&rh=1000&ra=fill"
+                alt="Gold Suite Hotel Exterior" class="w-full h-full object-cover scale-110" id="hero-img">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-charcoal/60"></div>
+        </div>
+
+        <div class="relative z-10 text-center text-white px-4">
+            <h1 class="font-serif text-5xl md:text-8xl mb-6 opacity-0 translate-y-12 luxury-text-reveal"
+                id="hero-title">
+                Luxury in the Heart <br> <span class="italic text-sand/90 font-light">of Nakuru</span>
+            </h1>
+            <p class="max-w-xl mx-auto text-sand/80 text-sm md:text-base tracking-[0.1em] mb-10 opacity-0 translate-y-8 italic"
+                id="hero-subtitle">
+                Modern comfort meets central accessibility in Nakuru city.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 opacity-0 translate-y-8"
+                id="hero-btns">
+                <a href="#rooms"
+                    class="btn-luxury px-10 py-4 text-[11px] uppercase tracking-[0.3em] font-medium min-w-[200px]">View
+                    Rooms</a>
+                <a href="#book"
+                    class="px-10 py-4 bg-white text-charcoal text-[11px] uppercase tracking-[0.3em] font-medium hover:bg-gold hover:text-white transition-colors duration-500 min-w-[200px]">Check
+                    Availability</a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-white/50 text-[10px] tracking-[0.2em] uppercase">
+            <span>Scroll</span>
+            <div class="w-[1px] h-12 bg-white/20 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-gold animate-scroll-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Storytelling Intro Section -->
+    <section id="about" class="py-24 md:py-40 px-8 container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="image-zoom-hover relative" data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/2dbc2731.jpg?impolicy=resizecrop&rw=1000&rh=800&ra=fill"
+                    alt="Luxury Hotel Interior" class="w-full shadow-2xl">
+                <div class="absolute -bottom-8 -right-8 w-48 h-48 border border-gold/30 -z-10 hidden md:block"></div>
+            </div>
+            <div class="max-w-lg" data-gsap="fade-right">
+                <h6 class="text-gold text-[10px] uppercase tracking-[0.4em] mb-6 block font-medium">The Essence of Gold
+                    Suite</h6>
+                <h2 class="font-serif text-4xl md:text-5xl mb-8 leading-tight">Welcome to <br> Nakuru's Premier Retreat.
+                </h2>
+                <div class="space-y-6 text-charcoal/70 leading-relaxed font-light">
+                    <p>
+                        Located in the heart of Nakuru, Gold Suite Hotel offers a sophisticated balance of comfort and
+                        accessibility. Our property is a modern, smoke-free sanctuary designed for both business
+                        professionals and leisure travelers.
+                    </p>
+                    <p>
+                        From our meticulously appointed guestrooms to our attentive 24-hour service, every element of
+                        your stay is crafted to ensure a seamless experience. Whether you're here to explore the Rift
+                        Valley or for business meetings, we provide the perfect base.
+                    </p>
+                    <p>
+                        Discover the harmony of local hospitality and modern amenities, all within reach of Nakuru's
+                        most iconic landmarks and the bustling city center.
+                    </p>
+                </div>
+                <div class="mt-12">
+                    <a href="#"
+                        class="text-charcoal border-b border-charcoal/20 pb-2 text-xs uppercase tracking-[0.2em] hover:border-gold hover:text-gold transition-all duration-300">Discover
+                        Our Property</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Experience / Amenities Section -->
+    <section id="amenities" class="bg-charcoal text-white py-24 md:py-40 px-8 overflow-hidden">
+        <div class="container mx-auto text-center mb-24">
+            <h6 class="text-sand/50 text-[10px] uppercase tracking-[0.4em] mb-6 block" data-gsap="fade-up">Curated for
+                Comfort</h6>
+            <h2 class="font-serif text-4xl md:text-6xl mb-4" data-gsap="fade-up">Premium Amenities</h2>
+            <div class="w-20 h-[1px] bg-gold mx-auto mt-8" data-gsap="scale-x"></div>
+        </div>
+
+        <div class="container mx-auto grid grid-cols-2 md:grid-cols-3 gap-y-16 gap-x-8 md:gap-y-24">
+            <!-- Amenity Items -->
+            <div class="flex flex-col items-center text-center group cursor-pointer" data-gsap="fade-up">
+                <div
+                    class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-8 group-hover:bg-gold/10 group-hover:border-gold transition-all duration-500">
+                    <i class="fa-solid fa-utensils text-2xl text-sand group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="text-xs uppercase tracking-[0.2em] font-medium mb-3">On-site Restaurant</h3>
+                <p class="text-xs text-white/40 max-w-[150px] leading-relaxed">Serving local and international gourmet
+                    cuisine.</p>
+            </div>
+
+            <div class="flex flex-col items-center text-center group cursor-pointer" data-gsap="fade-up">
+                <div
+                    class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-8 group-hover:bg-gold/10 group-hover:border-gold transition-all duration-500">
+                    <i
+                        class="fa-solid fa-glass-martini-alt text-2xl text-sand group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="text-xs uppercase tracking-[0.2em] font-medium mb-3">Bar / Lounge</h3>
+                <p class="text-xs text-white/40 max-w-[150px] leading-relaxed">A relaxed space to wind down in the
+                    evening.</p>
+            </div>
+
+            <div class="flex flex-col items-center text-center group cursor-pointer" data-gsap="fade-up">
+                <div
+                    class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-8 group-hover:bg-gold/10 group-hover:border-gold transition-all duration-500">
+                    <i class="fa-solid fa-coffee text-2xl text-sand group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="text-xs uppercase tracking-[0.2em] font-medium mb-3">Complimentary Breakfast</h3>
+                <p class="text-xs text-white/40 max-w-[150px] leading-relaxed">Daily continental breakfast served 7:30
+                    AM – 9:30 AM.</p>
+            </div>
+
+            <div class="flex flex-col items-center text-center group cursor-pointer" data-gsap="fade-up">
+                <div
+                    class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-8 group-hover:bg-gold/10 group-hover:border-gold transition-all duration-500">
+                    <i class="fa-solid fa-wifi text-2xl text-sand group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="text-xs uppercase tracking-[0.2em] font-medium mb-3">High-speed Free WiFi</h3>
+                <p class="text-xs text-white/40 max-w-[150px] leading-relaxed">Stay connected with 25+ Mbps speed
+                    throughout.</p>
+            </div>
+
+            <div class="flex flex-col items-center text-center group cursor-pointer" data-gsap="fade-up">
+                <div
+                    class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-8 group-hover:bg-gold/10 group-hover:border-gold transition-all duration-500">
+                    <i class="fa-solid fa-car text-2xl text-sand group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="text-xs uppercase tracking-[0.2em] font-medium mb-3">Free On-site Parking</h3>
+                <p class="text-xs text-white/40 max-w-[150px] leading-relaxed">Secure self-parking for all our guests.
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center text-center group cursor-pointer" data-gsap="fade-up">
+                <div
+                    class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-8 group-hover:bg-gold/10 group-hover:border-gold transition-all duration-500">
+                    <i
+                        class="fa-solid fa-users-rectangle text-2xl text-sand group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="text-xs uppercase tracking-[0.2em] font-medium mb-3">Business Facilities</h3>
+                <p class="text-xs text-white/40 max-w-[150px] leading-relaxed">Meeting and banquet facilities available
+                    on request.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Accommodation Section -->
+    <section id="rooms" class="py-24 md:py-40 px-8 bg-offwhite">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div class="max-w-xl">
+                <h6 class="text-gold text-[10px] uppercase tracking-[0.4em] mb-4 block font-medium">Accommodation</h6>
+                <h2 class="font-serif text-4xl md:text-5xl leading-tight">Meticulously Designed Spaces.</h2>
+            </div>
+            <p class="text-charcoal/50 text-sm max-w-xs leading-relaxed">
+                Choose from our 40 well-appointed guestrooms, each featuring Smart TVs and premium comfort.
+            </p>
+        </div>
+
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Room Card 1 (Executive Double) -->
+            <div class="group" data-gsap="fade-up">
+                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover">
+                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/3c185d68.jpg?impolicy=resizecrop&rw=1000&rh=1250&ra=fill"
+                        alt="Executive Double Room" class="w-full h-full object-cover">
+                    <div
+                        class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 text-[10px] uppercase tracking-widest font-medium">
+                        Luxury Stay</div>
+                </div>
+                <div class="px-2">
+                    <h3 class="font-serif text-2xl mb-4 group-hover:text-gold transition-colors duration-300">Executive
+                        Double</h3>
+                    <p class="text-charcoal/60 text-sm mb-8 font-light leading-loose">
+                        The pinnacle of comfort with a King bed and maximum luxury finishes. Ideal for high-end stays.
+                    </p>
+                    <a href="#"
+                        class="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-medium group/btn">
+                        <span>Details</span>
+                        <div class="w-8 h-[1px] bg-charcoal group-hover/btn:w-16 transition-all duration-500"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Room Card 2 (Deluxe Double) -->
+            <div class="group" data-gsap="fade-up" data-gsap-delay="100">
+                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover">
+                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/210af7c7.jpg?impolicy=resizecrop&rw=1000&rh=1250&ra=fill"
+                        alt="Deluxe Double Room" class="w-full h-full object-cover">
+                    <div
+                        class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 text-[10px] uppercase tracking-widest font-medium">
+                        Upgraded Comfort</div>
+                </div>
+                <div class="px-2">
+                    <h3 class="font-serif text-2xl mb-4 group-hover:text-gold transition-colors duration-300">Deluxe
+                        Double</h3>
+                    <p class="text-charcoal/60 text-sm mb-8 font-light leading-loose">
+                        Premium furnishings and extra space featuring a comfortable double bed for a refined stay.
+                    </p>
+                    <a href="#"
+                        class="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-medium group/btn">
+                        <span>Details</span>
+                        <div class="w-8 h-[1px] bg-charcoal group-hover/btn:w-16 transition-all duration-500"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Room Card 3 (Standard Double) -->
+            <div class="group" data-gsap="fade-up" data-gsap-delay="200">
+                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover">
+                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/293d13f6.jpg?impolicy=resizecrop&rw=1000&rh=1250&ra=fill"
+                        alt="Standard Double Room" class="w-full h-full object-cover">
+                    <div
+                        class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 text-[10px] uppercase tracking-widest font-medium">
+                        Modern Classic</div>
+                </div>
+                <div class="px-2">
+                    <h3 class="font-serif text-2xl mb-4 group-hover:text-gold transition-colors duration-300">Standard
+                        Double</h3>
+                    <p class="text-charcoal/60 text-sm mb-8 font-light leading-loose">
+                        Spacious and modern, featuring a Queen bed, perfect for couples or business travelers.
+                    </p>
+                    <a href="#"
+                        class="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-medium group/btn">
+                        <span>Details</span>
+                        <div class="w-8 h-[1px] bg-charcoal group-hover/btn:w-16 transition-all duration-500"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Parallax Feature -->
+    <section class="h-[70vh] relative flex items-center justify-center parallax-bg"
+        style="background-image: url('https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/de9d73ba.jpg?impolicy=fcrop&w=1800&h=1200&quality=high')">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative z-10 text-center text-white px-8">
+            <h2 class="font-serif text-4xl md:text-7xl mb-8" data-gsap="fade-up">Heart of Nakuru</h2>
+            <p class="max-w-2xl mx-auto text-sand/80 text-sm md:text-lg leading-relaxed font-light" data-gsap="fade-up">
+                A beacon of hospitality where the energy of the city meets the tranquility of high-end design.
+                Experience Nakuru from its most stylish center.
+            </p>
+        </div>
+    </section>
+
+    <!-- 6. Gallery Experience -->
+    <section id="gallery" class="py-24 md:py-40 px-8 container mx-auto">
+        <div class="text-center mb-20">
+            <h6 class="text-gold text-[10px] uppercase tracking-[0.4em] mb-4 block font-medium">Visual Journey</h6>
+            <h2 class="font-serif text-4xl md:text-5xl">Our Property</h2>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item tall image-zoom-hover cursor-pointer" onclick="openLightbox(this)"
+                data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/2c753f3e.jpg?impolicy=resizecrop&rw=800&rh=1000&ra=fill"
+                    alt="Interior View" class="w-full h-full object-cover">
+            </div>
+            <div class="gallery-item image-zoom-hover cursor-pointer" onclick="openLightbox(this)" data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/a9854a21.jpg?impolicy=resizecrop&rw=800&rh=800&ra=fill"
+                    alt="Suite Decor" class="w-full h-full object-cover">
+            </div>
+            <div class="gallery-item wide image-zoom-hover cursor-pointer" onclick="openLightbox(this)"
+                data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/835a1580.jpg?impolicy=resizecrop&rw=1000&rh=800&ra=fill"
+                    alt="Lounge Area" class="w-full h-full object-cover">
+            </div>
+            <div class="gallery-item image-zoom-hover cursor-pointer" onclick="openLightbox(this)" data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/c2b1c51d.jpg?impolicy=resizecrop&rw=800&rh=800&ra=fill"
+                    alt="Dining Room" class="w-full h-full object-cover">
+            </div>
+            <div class="gallery-item image-zoom-hover cursor-pointer" onclick="openLightbox(this)" data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/3bfc9b56.jpg?impolicy=resizecrop&rw=800&rh=800&ra=fill"
+                    alt="Modern Bathroom" class="w-full h-full object-cover">
+            </div>
+            <div class="gallery-item tall image-zoom-hover cursor-pointer" onclick="openLightbox(this)"
+                data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/8e5503d4.jpg?impolicy=resizecrop&rw=800&rh=1000&ra=fill"
+                    alt="Executive Suite" class="w-full h-full object-cover">
+            </div>
+            <div class="gallery-item wide image-zoom-hover cursor-pointer" onclick="openLightbox(this)"
+                data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/31a9aba8.jpg?impolicy=resizecrop&rw=1000&rh=800&ra=fill"
+                    alt="Hallway" class="w-full h-full object-cover">
+            </div>
+            <div class="gallery-item image-zoom-hover cursor-pointer" onclick="openLightbox(this)" data-gsap="fade-up">
+                <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/30b66015.jpg?impolicy=resizecrop&rw=800&rh=800&ra=fill"
+                    alt="Exterior Night" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Testimonials Section -->
+    <section class="py-24 md:py-40 bg-charcoal text-white overflow-hidden">
+        <div class="container mx-auto px-8">
+            <div class="flex flex-col md:flex-row gap-20 items-center">
+                <div class="md:w-1/3 text-center md:text-left">
+                    <h6 class="text-sand/50 text-[10px] uppercase tracking-[0.4em] mb-4 block">Kind Words</h6>
+                    <h2 class="font-serif text-4xl md:text-5xl">The Guest <br> Experience</h2>
+                    <div class="mt-8 flex justify-center md:justify-start gap-4">
+                        <button
+                            class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold transition-colors"
+                            onclick="prevTestimonial()">
+                            <i class="fa-solid fa-arrow-left text-xs"></i>
+                        </button>
+                        <button
+                            class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold transition-colors"
+                            onclick="nextTestimonial()">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-2/3 relative min-h-[320px] md:h-[450px]">
+                    <div id="testimonial-slider" class="relative w-full h-full">
+                        <!-- Slide 1 -->
+                        <div
+                            class="testimonial-slide absolute inset-0 opacity-0 transition-all duration-1000 flex flex-col justify-center pointer-events-none py-4">
+                            <div class="flex gap-1 text-gold mb-6">
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                            </div>
+                            <blockquote class="font-serif text-xl md:text-4xl leading-relaxed italic mb-8">
+                                "An exceptional blend of modern luxury and central city living. The staff here go above
+                                and beyond to make you feel at home."
+                            </blockquote>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-[1px] bg-gold"></div>
+                                <span class="text-xs uppercase tracking-[0.2em] text-sand">Samuel K., Nairobi</span>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div
+                            class="testimonial-slide absolute inset-0 opacity-0 transition-all duration-1000 flex flex-col justify-center pointer-events-none py-4">
+                            <div class="flex gap-1 text-gold mb-6">
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                                <i class="fa-solid fa-star text-[10px]"></i>
+                            </div>
+                            <blockquote class="font-serif text-xl md:text-4xl leading-relaxed italic mb-8">
+                                "The high-speed WiFi and central location made my business trip perfectly productive.
+                                Definitely my first choice in Nakuru."
+                            </blockquote>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-[1px] bg-gold"></div>
+                                <span class="text-xs uppercase tracking-[0.2em] text-sand">Michelle W., Cape Town</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Location & Discovery -->
+    <section id="location" class="py-24 md:py-40 px-8 container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+            <div>
+                <h6 class="text-gold text-[10px] uppercase tracking-[0.4em] mb-4 block font-medium">Discovery</h6>
+                <h2 class="font-serif text-4xl md:text-5xl mb-12">Heart of <br> Nakuru City</h2>
+
+                <div class="space-y-10">
+                    <div class="flex items-start gap-6">
+                        <div class="w-12 h-12 bg-sand/30 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-location-dot text-charcoal/40"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[0.2em] font-bold mb-2">Location</h4>
+                            <p class="text-charcoal/60 text-sm leading-relaxed">Kanu Street, Biashara, Nakuru City,
+                                Kenya</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-6">
+                        <div class="w-12 h-12 bg-sand/30 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-compass text-charcoal/40"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[0.2em] font-bold mb-2">Nearby Landmarks</h4>
+                            <ul class="text-charcoal/60 text-sm space-y-2">
+                                <li>Lake Nakuru National Park — 5 min drive</li>
+                                <li>Hyrax Hill Prehistoric Site — 6 min drive</li>
+                                <li>Menengai Crater — 20 min drive</li>
+                                <li>Nakuru City Center — 1.2 km away</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative min-h-[400px] bg-sand/20 group overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-[url('https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/b4d1e91a.jpg?impolicy=resizecrop&rw=1000&rh=800&ra=fill')] bg-cover bg-center grayscale opacity-30 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[2s]">
+                </div>
+                <div class="absolute inset-0 border border-charcoal/5 pointer-events-none"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="p-8 bg-white/90 backdrop-blur-md shadow-xl text-center">
+                        <p class="text-[10px] uppercase tracking-[0.4em] text-charcoal/40 mb-2">Interactive Map</p>
+                        <h4 class="font-serif text-xl mb-4">Central Location</h4>
+                        <a href="#"
+                            class="inline-block px-6 py-2 border border-charcoal text-[9px] uppercase tracking-widest hover:bg-charcoal hover:text-white transition-all">Open
+                            in Maps</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Call To Action -->
+    <section id="book" class="py-32 md:py-52 relative overflow-hidden bg-charcoal text-white">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/5b252bc0.jpg?impolicy=fcrop&w=1500&h=1000&quality=medium"
+                alt="CTA Background" class="w-full h-full object-cover opacity-20">
+        </div>
+        <div class="relative z-10 text-center px-8">
+            <h2 class="font-serif text-5xl md:text-8xl mb-12" data-gsap="fade-up">Your Escape Awaits</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8" data-gsap="fade-up">
+                <a href="https://wa.me/+254785438434" target="_blank"
+                    class="px-12 py-5 bg-gold text-white text-[11px] uppercase tracking-[0.3em] font-medium hover:bg-white hover:text-charcoal transition-all duration-500 w-full md:w-auto">Book
+                    via WhatsApp</a>
+                <a href="#"
+                    class="btn-luxury px-12 py-5 text-[11px] uppercase tracking-[0.3em] font-medium min-w-[200px] w-full md:w-auto">Check
+                    Availability</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Luxury Footer -->
+    <footer class="bg-offwhite pt-24 pb-12 px-8 border-t border-charcoal/5">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
+                <div class="md:col-span-1">
+                    <a href="#" class="font-serif text-3xl tracking-tighter mb-8 block">Gold Suite <span
+                            class="text-gold">Hotel</span></a>
+                    <p class="text-charcoal/50 text-xs leading-loose max-w-xs">
+                        Modern luxury and central Nakuru hospitality. Experience comfort designed for the discerning
+                        traveler.
+                    </p>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] uppercase tracking-[0.2em] font-bold mb-8">Navigation</h5>
+                    <ul class="space-y-4 text-xs text-charcoal/60 uppercase tracking-widest">
+                        <li><a href="#about" class="hover:text-gold transition-colors">The Story</a></li>
+                        <li><a href="#rooms" class="hover:text-gold transition-colors">Accommodation</a></li>
+                        <li><a href="#amenities" class="hover:text-gold transition-colors">Amenities</a></li>
+                        <li><a href="#gallery" class="hover:text-gold transition-colors">Gallery</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] uppercase tracking-[0.2em] font-bold mb-8">Contact</h5>
+                    <ul class="space-y-4 text-xs text-charcoal/60 leading-relaxed">
+                        <li>Kanu Street, Biashara, Nakuru</li>
+                        <li>+254 785 438 434</li>
+                        <li>info@goldsuitehotel.com</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] uppercase tracking-[0.2em] font-bold mb-8">Newsletter</h5>
+                    <p class="text-xs text-charcoal/50 mb-6">Receive updates and exclusive offers.</p>
+                    <div class="flex border-b border-charcoal/20 pb-2">
+                        <input type="email" placeholder="Email Address"
+                            class="bg-transparent text-xs w-full focus:outline-none placeholder:text-charcoal/30">
+                        <button class="text-[10px] uppercase tracking-widest font-bold">Join</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-charcoal/5 gap-8">
+                <div class="flex gap-8 text-xs text-charcoal/40 uppercase tracking-widest">
+                    <span>&copy; 2026 Gold Suite Hotel Nakuru</span>
+                    <a href="#" class="hover:text-charcoal">Privacy</a>
+                    <a href="#" class="hover:text-charcoal">Terms</a>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-charcoal/10 flex items-center justify-center hover:bg-gold hover:text-white transition-all"><i
+                            class="fa-brands fa-instagram text-xs"></i></a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-charcoal/10 flex items-center justify-center hover:bg-gold hover:text-white transition-all"><i
+                            class="fa-brands fa-facebook-f text-xs"></i></a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-charcoal/10 flex items-center justify-center hover:bg-gold hover:text-white transition-all"><i
+                            class="fa-brands fa-twitter text-xs"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Gallery Image Expanded">
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lenis
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+            touchMultiplier: 2,
+        })
+
+        function raf(time) {
+            lenis.raf(time)
+            requestAnimationFrame(raf)
+        }
+        requestAnimationFrame(raf)
+
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Preloader Animation
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to("#loader-logo", { opacity: 1, y: 0, duration: 1 })
+                .to("#loader-bar", { scaleX: 1, duration: 0.8, ease: "power2.inOut" })
+                .to("#preloader", { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, "+=0.3")
+                .from("#hero-img", { scale: 1.3, duration: 2, ease: "power2.out" }, "-=0.8")
+                .to("#hero-title", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.5")
+                .to("#hero-subtitle", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8")
+                .to("#hero-btns", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8");
+        });
+
+        // Sticky Nav Change
+        ScrollTrigger.create({
+            trigger: "section:nth-child(2)",
+            start: "top 100px",
+            onEnter: () => {
+                document.getElementById('main-nav').classList.add('glass-nav', 'py-4');
+                document.getElementById('main-nav').classList.remove('py-6');
+                document.getElementById('main-nav').querySelectorAll('a, button span').forEach(el => {
+                    el.style.color = 'var(--color-charcoal)';
+                    if (el.tagName === 'SPAN') el.style.backgroundColor = 'var(--color-charcoal)';
+                });
+            },
+            onLeaveBack: () => {
+                document.getElementById('main-nav').classList.remove('glass-nav', 'py-4');
+                document.getElementById('main-nav').classList.add('py-6');
+                document.getElementById('main-nav').querySelectorAll('a, button span').forEach(el => {
+                    el.style.color = 'white';
+                    if (el.tagName === 'SPAN') el.style.backgroundColor = 'white';
+                });
+            }
+        });
+
+        // GSAP Animations for sections
+        document.querySelectorAll('[data-gsap="fade-up"]').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power3.out",
+                delay: el.dataset.gsapDelay || 0
+            });
+        });
+
+        gsap.from('[data-gsap="fade-right"]', {
+            scrollTrigger: {
+                trigger: '[data-gsap="fade-right"]',
+                start: "top 80%",
+            },
+            x: -50,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        gsap.from('[data-gsap="scale-x"]', {
+            scrollTrigger: {
+                trigger: '[data-gsap="scale-x"]',
+                start: "top 90%",
+            },
+            scaleX: 0,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const sideMenu = document.getElementById('side-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('translate-x-full');
+            lenis.stop();
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sideMenu.classList.add('translate-x-full');
+            lenis.start();
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                sideMenu.classList.add('translate-x-full');
+                lenis.start();
+            });
+        });
+
+        // Testimonial Slider
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-slide');
+
+        function showTestimonial(index) {
+            testimonials.forEach((t, i) => {
+                if (i === index) {
+                    t.classList.remove('opacity-0', 'pointer-events-none');
+                    t.classList.add('opacity-1', 'z-10');
+                    t.style.transform = 'translateY(0)';
+                } else {
+                    t.classList.add('opacity-0', 'pointer-events-none');
+                    t.classList.remove('opacity-1', 'z-10');
+                    t.style.transform = 'translateY(20px)';
+                }
+            });
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+
+        showTestimonial(0);
+        setInterval(nextTestimonial, 8000);
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(el) {
+            const src = el.querySelector('img').src;
+            lightboxImg.src = src;
+            lightbox.style.display = 'flex';
+            gsap.fromTo(lightbox, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+            lenis.stop();
+        }
+
+        function closeLightbox() {
+            gsap.to(lightbox, {
+                opacity: 0, duration: 0.5, onComplete: () => {
+                    lightbox.style.display = 'none';
+                    lenis.start();
+                }
+            });
+        }
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroImg = document.getElementById('hero-img');
+            heroImg.style.transform = `translateY(${scrolled * 0.3}px) scale(1.1)`;
+        });
+
+    </script>
+</body>
+
+</html>
