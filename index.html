@@ -434,9 +434,9 @@
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
             <!-- Room Card 1 (Executive Double) -->
             <div class="group" data-gsap="fade-up">
-                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover">
-                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/3c185d68.jpg?impolicy=resizecrop&rw=1000&rh=1250&ra=fill"
-                        alt="Executive Double Room" class="w-full h-full object-cover">
+                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover bg-sand/20">
+                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/3c185d68.jpg?impolicy=resizecrop&rw=600&rh=750&ra=fill"
+                        alt="Executive Double Room" class="w-full h-full object-cover" loading="eager" decoding="async">
                     <div
                         class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 text-[10px] uppercase tracking-widest font-medium">
                         Luxury Stay</div>
@@ -456,10 +456,10 @@
             </div>
 
             <!-- Room Card 2 (Deluxe Double) -->
-            <div class="group" data-gsap="fade-up" data-gsap-delay="100">
-                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover">
-                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/210af7c7.jpg?impolicy=resizecrop&rw=1000&rh=1250&ra=fill"
-                        alt="Deluxe Double Room" class="w-full h-full object-cover">
+            <div class="group" data-gsap="fade-up" data-gsap-delay="0.1">
+                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover bg-sand/20">
+                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/210af7c7.jpg?impolicy=resizecrop&rw=600&rh=750&ra=fill"
+                        alt="Deluxe Double Room" class="w-full h-full object-cover" loading="lazy" decoding="async">
                     <div
                         class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 text-[10px] uppercase tracking-widest font-medium">
                         Upgraded Comfort</div>
@@ -479,10 +479,10 @@
             </div>
 
             <!-- Room Card 3 (Standard Double) -->
-            <div class="group" data-gsap="fade-up" data-gsap-delay="200">
-                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover">
-                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/293d13f6.jpg?impolicy=resizecrop&rw=1000&rh=1250&ra=fill"
-                        alt="Standard Double Room" class="w-full h-full object-cover">
+            <div class="group" data-gsap="fade-up" data-gsap-delay="0.2">
+                <div class="relative overflow-hidden mb-8 aspect-[4/5] image-zoom-hover bg-sand/20">
+                    <img src="https://images.trvl-media.com/lodging/117000000/116860000/116851900/116851812/293d13f6.jpg?impolicy=resizecrop&rw=600&rh=750&ra=fill"
+                        alt="Standard Double Room" class="w-full h-full object-cover" loading="lazy" decoding="async">
                     <div
                         class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 text-[10px] uppercase tracking-widest font-medium">
                         Modern Classic</div>
@@ -566,8 +566,9 @@
     <!-- 7. Testimonials Section -->
     <section class="py-24 md:py-40 bg-charcoal text-white overflow-hidden">
         <div class="container mx-auto px-8">
-            <div class="flex flex-col md:flex-row gap-20 items-center">
-                <div class="md:w-1/3 text-center md:text-left">
+            <div class="flex flex-col md:flex-row gap-12 md:gap-20">
+                <!-- Left: heading + controls -->
+                <div class="md:w-1/3 flex flex-col justify-center text-center md:text-left">
                     <h6 class="text-sand/50 text-[10px] uppercase tracking-[0.4em] mb-4 block">Kind Words</h6>
                     <h2 class="font-serif text-4xl md:text-5xl">The Guest <br> Experience</h2>
                     <div class="mt-8 flex justify-center md:justify-start gap-4">
@@ -583,11 +584,12 @@
                         </button>
                     </div>
                 </div>
-                <div class="md:w-2/3 relative min-h-[320px] md:h-[450px]">
-                    <div id="testimonial-slider" class="relative w-full h-full">
+                <!-- Right: slider track -->
+                <div class="md:w-2/3 overflow-hidden">
+                    <div id="testimonial-track"
+                        class="flex transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)]">
                         <!-- Slide 1 -->
-                        <div
-                            class="testimonial-slide absolute inset-0 opacity-0 transition-all duration-1000 flex flex-col justify-center pointer-events-none py-4">
+                        <div class="testimonial-slide min-w-full flex flex-col justify-center py-6">
                             <div class="flex gap-1 text-gold mb-6">
                                 <i class="fa-solid fa-star text-[10px]"></i>
                                 <i class="fa-solid fa-star text-[10px]"></i>
@@ -596,8 +598,8 @@
                                 <i class="fa-solid fa-star text-[10px]"></i>
                             </div>
                             <blockquote class="font-serif text-xl md:text-4xl leading-relaxed italic mb-8">
-                                "An exceptional blend of modern luxury and central city living. The staff here go above
-                                and beyond to make you feel at home."
+                                &ldquo;An exceptional blend of modern luxury and central city living. The staff here go
+                                above and beyond to make you feel at home.&rdquo;
                             </blockquote>
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-[1px] bg-gold"></div>
@@ -605,8 +607,7 @@
                             </div>
                         </div>
                         <!-- Slide 2 -->
-                        <div
-                            class="testimonial-slide absolute inset-0 opacity-0 transition-all duration-1000 flex flex-col justify-center pointer-events-none py-4">
+                        <div class="testimonial-slide min-w-full flex flex-col justify-center py-6">
                             <div class="flex gap-1 text-gold mb-6">
                                 <i class="fa-solid fa-star text-[10px]"></i>
                                 <i class="fa-solid fa-star text-[10px]"></i>
@@ -615,8 +616,8 @@
                                 <i class="fa-solid fa-star text-[10px]"></i>
                             </div>
                             <blockquote class="font-serif text-xl md:text-4xl leading-relaxed italic mb-8">
-                                "The high-speed WiFi and central location made my business trip perfectly productive.
-                                Definitely my first choice in Nakuru."
+                                &ldquo;The high-speed WiFi and central location made my business trip perfectly
+                                productive. Definitely my first choice in Nakuru.&rdquo;
                             </blockquote>
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-[1px] bg-gold"></div>
@@ -881,31 +882,24 @@
             });
         });
 
-        // Testimonial Slider
+        // Testimonial Slider (track-based — works on all screen sizes)
         let currentTestimonial = 0;
-        const testimonials = document.querySelectorAll('.testimonial-slide');
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const testimonialTrack = document.getElementById('testimonial-track');
 
         function showTestimonial(index) {
-            testimonials.forEach((t, i) => {
-                if (i === index) {
-                    t.classList.remove('opacity-0', 'pointer-events-none');
-                    t.classList.add('opacity-1', 'z-10');
-                    t.style.transform = 'translateY(0)';
-                } else {
-                    t.classList.add('opacity-0', 'pointer-events-none');
-                    t.classList.remove('opacity-1', 'z-10');
-                    t.style.transform = 'translateY(20px)';
-                }
-            });
+            if (testimonialTrack) {
+                testimonialTrack.style.transform = `translateX(-${index * 100}%)`;
+            }
         }
 
         function nextTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            currentTestimonial = (currentTestimonial + 1) % testimonialSlides.length;
             showTestimonial(currentTestimonial);
         }
 
         function prevTestimonial() {
-            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            currentTestimonial = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
             showTestimonial(currentTestimonial);
         }
 
